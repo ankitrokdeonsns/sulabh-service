@@ -1,0 +1,26 @@
+{
+  "name": "sulabh-service",
+  "version": "0.0.1",
+  "description": "backend service for sulabh mobile app",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ankitrokdeonsns/sulabh-service.git"
+  },
+  "devDependencies":{
+    "mocha":"*",
+    "chai":"*"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ankitrokdeonsns/sulabh-service/issues"
+  },
+  "homepage": "https://github.com/ankitrokdeonsns/sulabh-service"
+}
