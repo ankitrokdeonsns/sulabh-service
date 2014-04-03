@@ -1,46 +1,39 @@
 var geoSpatialRepository = {};
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/repository');
+mongoose.connect('mongodb://localhost/sulabh');
 
 var Schema = mongoose.Schema;
 
 var LocationSchema = new Schema({
     type: String,
-    coordinates: [Number,Number]
-});
+    coordinates: [Number, Number]
+}, { versionKey: false });
 
-var Location = mongoose.model('repository', LocationSchema);
+var Location = mongoose.model('locations', LocationSchema);
 
 var db = mongoose.connection;
 
-
-//geoSpatialRepository.find = function(){
-//    var query = Location.find({}, function(error, data){});
-//
-//    return query.exec(function(err, data){
-//        console.log("DATA ************************** ");
-//        console.log (JSON.stringify(data));
-//        gdata = data;
-//
-//        if(gdata!= null )
-//            throw
-//        //return data;
-//    });
-//}
-
-var gdata = {data:{}};
-var query = Location.find({}, function(error, data){});
-query.exec(function(err, data){
-  console.log("DATA ************************** ");
-        gdata.data = data;
-});
-geoSpatialRepository.find = function(){
-    return gdata.data;
+geoSpatialRepository.findAll = function(callBack) {
+    Location.find({}).exec(callBack);
 }
 
-geoSpatialRepository.save = function(data){
+geoSpatialRepository.find = function(latitude, longitude, radius, callBack) {
+    var miles = radius * 0.62137;
+
+    Location.find({
+        coordinates:{
+            $geoWithin:{
+                $centerSphere:
+                    [[latitude,longitude], miles/3959]}}}).exec(callBack);
+}
+
+geoSpatialRepository.save = function (data) {
     var location = new Location(data);
-    location.save(function(error,data){});
+    location.save(function (error, data) {});
+}
+
+geoSpatialRepository.remove = function(){
+    Location.remove({},function(){});
 }
 
 exports.geoSpatialRepository = geoSpatialRepository;
