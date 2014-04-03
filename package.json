@@ -15,7 +15,9 @@
   },
   "devDependencies":{
     "mocha":"*",
-    "chai":"*"
+    "chai":"*",
+    "sinon":"*",
+    "mongoose":"*"
   },
   "author": "",
   "license": "ISC",
