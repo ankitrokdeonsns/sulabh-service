@@ -1,5 +1,5 @@
 var location = {};
-var repository = require("./repository.js").repository;
+var repository = require("./geoSpatialRepository.js").geoSpatialRepository;
 
 location.search = function(latitude, longitude, radius){
 	return repository.find(latitude, longitude, radius)

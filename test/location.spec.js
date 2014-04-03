@@ -1,30 +1,39 @@
 var assert = require("assert");
 var location = require("../location.js").location;
-var repository = require("../repository.js").repository;
+var repository = require("../geoSpatialRepository.js").geoSpatialRepository;
 var sinon = require("sinon");
-var chai = require("chai"),
-	should = chai.should(),
-	expect = chai.expect;
+var chai = require("chai");
+var should = chai.should();
+var	expect = chai.expect;
 
 describe("searching locations within a given radius", function(){
+	var latitude = 180, longitude = 703, radius = 2;
+	var mockedFind;
+
+	before(function(){
+        mockedFind = sinon.mock(repository);
+	});
+
 	it("should return no locations", function(){
-		repository.find = sinon.stub().returns(undefined);
-		var latitude = 18, longitude = 73, radius = 2;
-		
-		var locations = location.search(latitude, longitude, radius);
-		
-		expect(locations).to.be.empty;
-	})
+        mockedFind.expects("find").withArgs(latitude,longitude,radius).returns(undefined);
+	    var results = location.search(latitude,longitude,radius);
+        expect(results).to.be.undefined;
+    });
 
-	it("should return locations", function(){
-		var expectedLocations = [{name:"yerawada",latitude:18,longitude:73}];
-		repository.find = sinon.stub().returns(expectedLocations);
-		var latitude = 18, longitude = 73, radius = 2;
-		
-		var actualLocations = location.search(latitude, longitude, radius);
-		
-		expect(actualLocations).not.to.be.empty;
-		expect(actualLocations).to.have.length(1);
-	})
+    it("should return locations when available", function(){
+        var data = {
+            type: "point",
+            coordinates: [20,25]
+        };
+        var latitude = 180, longitude = 703, radius = 2;
 
-})
+        mockedFind.expects("find").withArgs(latitude,longitude,radius).returns(data);
+        var results = location.search(latitude,longitude,radius);
+        expect(results).to.deep.equal(data);
+    });
+
+    after(function(){
+        mockedFind.restore();
+    });
+
+});
