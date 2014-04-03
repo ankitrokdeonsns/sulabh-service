@@ -17,10 +17,7 @@ describe("finding one location from the database", function(){
         locationsRepository.save(actual);
     });
 
-    var expected = [{
-        "type":"point",
-        "coordinates":[20,20]
-    }];
+    var expected = [actual];
 
     it("should find the data present in location repository", function() {
         //call
@@ -95,12 +92,12 @@ describe("finding locations within a particular radius", function(){
         // call
         locationsRepository.find(latitude, longitude, radius, function(error, data) {
             // assertion
+            expect(data.length).to.not.equal(0);
             for(var i=0;i<data.length;i++){
                 for(var j=0;j < data[i].coordinates;j++)
                     expect(data[i][j].coordinates).eql(expected[i][j].coordinates);
                 expect(data[i].type).eql(expected[i].type);
             }
-            expect(data.length).to.not.equal(0);
         });
     });
 
