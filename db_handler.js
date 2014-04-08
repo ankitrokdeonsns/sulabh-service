@@ -4,9 +4,9 @@ mongoose.connect('mongodb://localhost/sulabh');
 var Schema = mongoose.Schema;
 
 var LocationSchema = new Schema({
-    type: String,
+    name: String,
     coordinates: [Number, Number]
-}, { versionKey: false });
+}, { versionKey: false, _id: false });
 
 var database = mongoose.model('locations', LocationSchema);
 

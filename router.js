@@ -3,8 +3,8 @@ var router = new(journey.Router);
 var locations = require("./db_handler.js").database;
 
 router.get('/hello').bind(function (req, res) {
-    locations.find({}).exec(function(err,people){
-        res.send({"people":people});
+    locations.find({},{"_id":0, "name": 1, "coordinates":1}).exec(function(err,locations){
+        res.send({"locations":locations});
     })
 });
 
