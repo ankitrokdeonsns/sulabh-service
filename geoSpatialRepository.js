@@ -1,4 +1,3 @@
-
 var geoSpatialRepository = {};
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/sulabh');
@@ -6,22 +5,19 @@ mongoose.connect('mongodb://localhost/sulabh');
 var Schema = mongoose.Schema;
 
 var LocationSchema = new Schema({
-    type: String,
+    name: String,
     coordinates: [Number, Number]
 }, { versionKey: false });
 
-var Location = mongoose.model('locations', LocationSchema);
-
-var db = mongoose.connection;
+var LocationModel = mongoose.model('locations', LocationSchema);
 
 geoSpatialRepository.findAll = function(callBack) {
-    Location.find({}).exec(callBack);
+    LocationModel.find({}).exec(callBack);
 }
 
 geoSpatialRepository.find = function(latitude, longitude, radius, callBack) {
     var miles = radius * 0.62137;
-
-    Location.find({
+    LocationModel.find({
         coordinates:{
             $geoWithin:{
                 $centerSphere:
@@ -29,12 +25,12 @@ geoSpatialRepository.find = function(latitude, longitude, radius, callBack) {
 }
 
 geoSpatialRepository.save = function (data) {
-    var location = new Location(data);
+    var location = new LocationModel(data);
     location.save(function (error, data) {});
 }
 
 geoSpatialRepository.remove = function(){
-    Location.remove({},function(){});
+    LocationModel.remove({},function(){});
 }
 
 exports.geoSpatialRepository = geoSpatialRepository;

@@ -1,21 +1,24 @@
 var journey = require('journey');
 var router = new(journey.Router);
-var locations = require("./db_handler.js").database;
+var geoSpatialRepository = require('./geoSpatialRepository.js').geoSpatialRepository;
 
-router.get('/hello').bind(function (req, res) {
-    locations.find({},{"_id":0, "name": 1, "coordinates":1}).exec(function(err,locations){
-        res.send({"locations":locations});
-    })
+router.get('/locations').bind(function (req, res) {
+    var request = require('url').parse(req.url);
+    var latLong = request.query.split("&");
+    var latitude = latLong[0].split("=")[1];
+    var longitude = latLong[1].split("=")[1];
+    var callBack = function (error, data){
+        res.send("locations: "+data);
+    };
+    geoSpatialRepository.find(latitude, longitude, 2, callBack);
 });
 
 require('http').createServer(function (request, response) {
     var body = "";
-    console.log("server started");
     request.addListener('data', function (chunk) { body += chunk });
     request.addListener('end', function () {
         
         router.handle(request, body, function (result) {
-            
             response.writeHead(result.status, result.headers);
             response.end(result.body);
         });

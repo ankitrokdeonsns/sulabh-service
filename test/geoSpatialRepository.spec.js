@@ -9,11 +9,12 @@ var chai = require("chai"),
 describe("finding one location from the database", function(){
     //setup
     var actual = {
-        "type":"point",
+        "name":"point",
         "coordinates":[20,20]
     };
 
     before(function(){
+        locationsRepository.remove();
         locationsRepository.save(actual);
     });
 
@@ -24,29 +25,25 @@ describe("finding one location from the database", function(){
         locationsRepository.findAll(function(error, data) {
             //assertion
             expect(data.coordinates).deep.equals(expected.coordinates);
-            expect(data.type).deep.equals(expected.type);
+            expect(data.name).deep.equals(expected.name);
         });
     });
-
-    after(function(){
-        locationsRepository.remove(actual);
-    });
-
 });
 
 describe("finding multiple locations from database", function(){
     var data1 = {
-        "type":"point",
+        "name":"point",
         "coordinates":[20,20]
     };
     var data2 = {
-        "type":"point",
+        "name":"point",
         "coordinates":[42,72]
     };
 
     var expected = [data1,data2];
 
     before(function(){
+        locationsRepository.remove();
         locationsRepository.save(data1);
         locationsRepository.save(data2);
     });
@@ -58,27 +55,22 @@ describe("finding multiple locations from database", function(){
             for(var i=0;i<data.length;i++){
                 for(var j=0;j<data[i].coordinates;j++)
                     expect(data[i][j].coordinates).eql(expected[i][j].coordinates);
-                expect(data[i].type).eql(expected[i].type);
+                expect(data[i].name).eql(expected[i].name);
             }
         });
     });
-
-    after(function(){
-        locationsRepository.remove(data1);
-        locationsRepository.remove(data2);
-    });
-
 });
 
 describe("finding locations within a particular radius", function(){
 
     //setup
     var actual = {
-        "type":"point",
+        "name":"point",
         "coordinates":[18.533333,73.866667]
     };
 
     before(function(){
+        locationsRepository.remove();
         locationsRepository.save(actual);
     });
 
@@ -96,27 +88,22 @@ describe("finding locations within a particular radius", function(){
             for(var i=0;i<data.length;i++){
                 for(var j=0;j < data[i].coordinates;j++)
                     expect(data[i][j].coordinates).eql(expected[i][j].coordinates);
-                expect(data[i].type).eql(expected[i].type);
+                expect(data[i].name).eql(expected[i].name);
             }
         });
     });
-
-    after(function(){
-        locationsRepository.remove(actual);
-    });
-
 });
-
 
 describe("finding locations within a particular radius", function(){
 
     //setup
     var actual = {
-        "type":"point",
+        "name":"point",
         "coordinates":[18.533333,73.866667]
     };
 
     before(function(){
+        locationsRepository.remove();
         locationsRepository.save(actual);
     });
 
@@ -133,14 +120,9 @@ describe("finding locations within a particular radius", function(){
             for(var i=0;i<data.length;i++){
                 for(var j=0;j < data[i].coordinates;j++)
                     expect(data[i][j].coordinates).eql(expected[i][j].coordinates);
-                expect(data[i].type).eql(expected[i].type);
+                expect(data[i].name).eql(expected[i].name);
             }
             expect(data.length).to.equal(0);
         });
     });
-
-    after(function(){
-        locationsRepository.remove(actual);
-    });
-
 });
