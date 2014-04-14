@@ -6,7 +6,9 @@ router.get('/locations').bind(function (req, res, params) {
     var latitude = params.latitude;
     var longitude = params.longitude;
     var callBack = function (error, data){
-        res.send("locations: "+data);
+        var response = {};
+        response["locations"] = data;
+        res.send(response);
     };
     geoSpatialRepository.find(latitude, longitude, 2, callBack);
 });
