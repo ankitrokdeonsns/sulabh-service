@@ -6,7 +6,13 @@ var Schema = mongoose.Schema;
 
 var LocationSchema = new Schema({
     name: String,
-    coordinates: [Number, Number]
+    coordinates: [Number, Number],
+    rating: Number,
+    operational: Boolean,
+    hygienic: Boolean,
+    free: Boolean,
+    type: String,
+    suitableFor: [String, String, String, String, String]
 }, { versionKey: false });
 
 var LocationModel = mongoose.model('locations', LocationSchema);
