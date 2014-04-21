@@ -14,19 +14,9 @@ router.get('/locations').bind(function (req, res, params) {
     geoSpatialRepository.find(latitude, longitude, 2, callBack);
 });
 
-router.get('/add').bind(function (req, res, params) {
-    var data = {
-        "name": params.name,
-        "rating": params.rating,
-        "coordinates":[params.latitude, params.longitude],
-        "operational":params.operational,
-        "hygienic":params.hygienic,
-        "free":params.free,
-        "type":params.kind,
-        "suitableFor":[params.suitableFor]
-    }
-    geoSpatialRepository.save(data);
-    console.log("inserted data.."+ JSON.stringify(data));
+router.post('/add').bind(function (req, res, params) {
+    geoSpatialRepository.save(params);
+    console.log("inserted data.."+ JSON.stringify(params));
     res.send("Added Successfully!!");
 });
 
