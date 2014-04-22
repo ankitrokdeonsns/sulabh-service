@@ -39,4 +39,12 @@ geoSpatialRepository.remove = function(){
     LocationModel.remove({},function(){});
 }
 
+geoSpatialRepository.update = function(data){
+    var callBack = function (err, location) {
+        LocationModel.update( { _id: location._id} , data, function(err, data){});
+    }
+    LocationModel.findOne({coordinates: [data.latitude, data.longitude]}, function(err, doc) {}).exec(callBack);
+
+}
+
 exports.geoSpatialRepository = geoSpatialRepository;
