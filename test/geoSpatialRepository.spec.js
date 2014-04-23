@@ -1,6 +1,8 @@
 var assert = require("assert");
 
 var locationsRepository = require("../geoSpatialRepository.js").geoSpatialRepository;
+var LocationModel = require("../geoSpatialRepository.js").LocationModel;
+
 var chai = require("chai"),
 	should = chai.should(),
 	expect = chai.expect,
@@ -126,3 +128,47 @@ describe("finding locations within a particular radius", function(){
         });
     });
 });
+
+describe("updating a particular loo when already present", function(){
+    // setup
+    var oldLoo = {
+        "name": "name",
+        "coordinates": [50.00, 70.00],
+        "rating": 4,
+        "operational": true,
+        "hygienic": true,
+        "free": false,
+        "type": "Western",
+        "suitableFor": ["Men"]
+    };
+
+    before(function(){
+        locationsRepository.remove();
+        locationsRepository.save(oldLoo);
+    });
+
+    var newLoo = {
+        "name": "newName",
+        "coordinates": [50.00, 70.00],
+        "rating": 4,
+        "operational": true,
+        "hygienic": true,
+        "free": false,
+        "type": "Indian",
+        "suitableFor": ["Men"]
+    };
+
+    it("should update the given loo", function(){
+        // call
+        locationsRepository.update(newLoo);
+
+        var callBack = function(error, data){
+            for(var i=0;i<data.length;i++)
+                // assert
+                expect(data.name).to.equal(newLoo.name);
+        }
+
+        LocationModel.findOne({coordinates: [oldLoo.coordinates[0], oldLoo.coordinates[1]]}, 
+            function(err, doc) {}).exec(callBack);
+    })
+})

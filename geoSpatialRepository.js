@@ -27,7 +27,10 @@ geoSpatialRepository.find = function(latitude, longitude, radius, callBack) {
         coordinates:{
             $geoWithin:{
                 $centerSphere:
-                    [[latitude,longitude], miles/3959]}}}).exec(callBack);
+                    [[latitude,longitude], miles/3959]
+            }
+        }
+    }).exec(callBack);
 }
 
 geoSpatialRepository.save = function (data) {
@@ -43,8 +46,8 @@ geoSpatialRepository.update = function(data){
     var callBack = function (err, location) {
         LocationModel.update( { _id: location._id} , data, function(err, data){});
     }
-    LocationModel.findOne({coordinates: [data.latitude, data.longitude]}, function(err, doc) {}).exec(callBack);
-
+    LocationModel.findOne({coordinates: [data.coordinates[0], data.coordinates[1]]}, function(err, doc) {ø}).exec(callBack);
 }
 
+exports.LocationModel = LocationModel;
 exports.geoSpatialRepository = geoSpatialRepository;
