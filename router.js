@@ -13,6 +13,7 @@ router.get('/locations').bind(function (req, res, params) {
     };
     geoSpatialRepository.find(latitude, longitude, 2, callBack);
 });
+
 var getParams = function(params){
     var suitableFor = params.suitableFor.split(" ");
     suitableFor = suitableFor.filter(filterEmpty);
@@ -26,11 +27,11 @@ var getParams = function(params){
         "type": params.kind,
         "suitableFor": suitableFor
     }
+    return data;
 }
 router.post('/add').bind(function (req, res, params) {
-   getParams(params);
+    var data = getParams(params);
     geoSpatialRepository.save(data);
-    console.log("inserted data.."+ JSON.stringify(data));
     res.send("Added Successfully!!");
 });
 
@@ -39,18 +40,16 @@ var filterEmpty = function(value){
 }
 
 router.post('/update').bind(function (req, res, params) {
-    console.log(params+"************************")
-   getParams(params);
+    var data = getParams(params);
     geoSpatialRepository.update(data);
-    console.log("updated data.."+ JSON.stringify(data));
     res.send("Updated Successfully!!");
 });
 
 require('http').createServer(function (request, response) {
+    console.log("**** Server started : ");
     var body = "";
     request.addListener('data', function (chunk) { body += chunk });
     request.addListener('end', function () {
-        
         router.handle(request, body, function (result) {
             response.writeHead(result.status, result.headers);
             response.end(result.body);
