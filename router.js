@@ -13,9 +13,9 @@ router.get('/locations').bind(function (req, res, params) {
     };
     geoSpatialRepository.find(latitude, longitude, 2, callBack);
 });
-
-router.post('/add').bind(function (req, res, params) {
-    console.log("\n\n"+params.latitude + " " + params.longitude+"\n\n")
+var getParams = function(params){
+    var suitableFor = params.suitableFor.split(" ");
+    suitableFor = suitableFor.filter(filterEmpty);
     var data = {
         "name": params.name,
         "coordinates": [params.latitude, params.longitude],
@@ -24,16 +24,25 @@ router.post('/add').bind(function (req, res, params) {
         "hygienic": params.hygienic,
         "free": params.free,
         "type": params.kind,
-        "suitableFor": params.suitableFor
+        "suitableFor": suitableFor
     }
+}
+router.post('/add').bind(function (req, res, params) {
+   getParams(params);
     geoSpatialRepository.save(data);
     console.log("inserted data.."+ JSON.stringify(data));
     res.send("Added Successfully!!");
 });
 
+var filterEmpty = function(value){
+    return value!="";
+}
+
 router.post('/update').bind(function (req, res, params) {
-    geoSpatialRepository.update(params);
-    console.log("updated data.."+ JSON.stringify(params));
+    console.log(params+"************************")
+   getParams(params);
+    geoSpatialRepository.update(data);
+    console.log("updated data.."+ JSON.stringify(data));
     res.send("Updated Successfully!!");
 });
 

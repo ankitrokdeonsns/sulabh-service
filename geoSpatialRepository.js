@@ -46,7 +46,7 @@ geoSpatialRepository.update = function(data){
     var callBack = function (err, location) {
         LocationModel.update( { _id: location._id} , data, function(err, data){});
     }
-    LocationModel.findOne({coordinates: [data.coordinates[0], data.coordinates[1]]}, function(err, doc) {ø}).exec(callBack);
+    LocationModel.findOne({coordinates: [data.coordinates[0], data.coordinates[1]]}, function(err, doc) {}).exec(callBack);
 }
 
 exports.LocationModel = LocationModel;
