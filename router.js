@@ -30,6 +30,7 @@ var getParams = function(params){
     return data;
 }
 router.post('/add').bind(function (req, res, params) {
+    console.log("******* now adding.... ")
     var data = getParams(params);
     geoSpatialRepository.save(data);
     res.send("Added Successfully!!");
@@ -40,9 +41,18 @@ var filterEmpty = function(value){
 }
 
 router.post('/update').bind(function (req, res, params) {
+    console.log("******* now updating.... ")
     var data = getParams(params);
     geoSpatialRepository.update(data);
     res.send("Updated Successfully!!");
+});
+
+router.post('/rate').bind(function (req, res, params) {
+    console.log("******* now rating.... ")
+    var data = getParams(params);
+    geoSpatialRepository.update(data);
+    console.log("****** data: "+JSON.stringify(data))
+    res.send("Rated Successfully!!");
 });
 
 require('http').createServer(function (request, response) {
