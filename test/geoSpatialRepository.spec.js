@@ -136,7 +136,6 @@ describe("updating a particular loo when already present", function(){
         "coordinates": [50.00, 70.00],
         "rating": 4,
         "operational": true,
-        "hygienic": true,
         "free": false,
         "type": "Western",
         "suitableFor": ["Men"]
@@ -152,7 +151,6 @@ describe("updating a particular loo when already present", function(){
         "coordinates": [50.00, 70.00],
         "rating": 4,
         "operational": true,
-        "hygienic": true,
         "free": false,
         "type": "Indian",
         "suitableFor": ["Men"]

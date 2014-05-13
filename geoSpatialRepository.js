@@ -12,7 +12,6 @@ var LocationSchema = new Schema({
         numOfRatings: Number
     },
     operational: Boolean,
-    hygienic: Boolean,
     free: Boolean,
     type: String,
     suitableFor: [String, String, String, String, String]
@@ -45,7 +44,6 @@ geoSpatialRepository.save = function (params) {
             "numOfRatings": 1
         },
         "operational": params.operational,
-        "hygienic": params.hygienic,
         "free": params.free,
         "type": params.type,
         "suitableFor": params.suitableFor
@@ -68,7 +66,6 @@ geoSpatialRepository.update = function(params){
                 "numOfRatings": (location.rating.numOfRatings + 1)
             },
             "operational": params.operational,
-            "hygienic": params.hygienic,
             "free": params.free,
             "type": params.type,
             "suitableFor": params.suitableFor

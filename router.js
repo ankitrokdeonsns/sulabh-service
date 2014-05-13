@@ -22,7 +22,6 @@ var getParams = function(params){
         "coordinates": [params.latitude, params.longitude],
         "rating": params.rating,
         "operational": params.operational,
-        "hygienic": params.hygienic,
         "free": params.free,
         "type": params.kind,
         "suitableFor": suitableFor
