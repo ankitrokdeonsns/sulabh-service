@@ -1,6 +1,6 @@
 var geoSpatialRepository = {};
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mydb');
+mongoose.connect('mongodb://localhost/sulabh');
 
 var Schema = mongoose.Schema;
 
