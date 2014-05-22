@@ -1,12 +1,13 @@
 {
-  "name": "sulabh-service",
-  "version": "0.0.1",
+  "name": "router",
+  "version": "0.0.1-2",
   "description": "backend service for sulabh mobile app",
   "main": "router.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
+    "start": "router.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,7 +18,8 @@
     "mocha": "*",
     "chai": "*",
     "sinon": "*",
-    "mongoose": "*"
+    "mongoose": "*",
+    "grunt": "^0.4.5"
   },
   "author": "",
   "license": "ISC",
@@ -32,5 +34,9 @@
     "chai": "~1.9.1",
     "mongo": "~0.1.0",
     "sinon": "~1.9.1"
-  }
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "subdomain": "router.shwetado"
 }
